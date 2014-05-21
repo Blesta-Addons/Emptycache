@@ -1,0 +1,45 @@
+		<?php
+		echo $this->Html->ifSet($message);
+		//$link_buttons = array(
+			//array('name'=>$this->_("EmptycachePlugin.field_submit", true), 'attributes'=>array('href'=>$this->Html->safe($this->base_uri . "?action=videcache"), 'class'=>"setting")),
+		//);
+		
+		$this->Widget->clear();
+		//$this->Widget->setLinkButtons($link_buttons);
+		$this->Widget->create($this->_("EmptycachePlugin.index.page_title", true));
+
+		if (empty($cache)) {
+		?>		
+			<div class="empty_section">
+				<div class="empty_box">					
+					<?php $this->_("EmptycachePlugin.empty");?>
+				</div>
+			</div>
+		<?php
+		}
+		else {
+			$this->Form->create($this->base_uri . "plugin/emptycache/admin_main/");
+			?>		
+			<div class="empty_section">
+				<div class="empty_box">					
+					<?php $this->_("EmptycachePlugin.notempty");?>
+					<div class="button_row">
+						<a href="<?php echo $this->Html->safe($this->base_uri . "plugin/emptycache/admin_main/") ;?>" class="manage btn_right submit" rel="<?php $this->_("EmptycachePlugin.modal.emptycache");?>"><?php $this->_("EmptycachePlugin.field_submit");?></a>
+					</div>					
+				</div>
+			</div>
+			<?php
+			$this->Form->fieldHidden("action", "empty");			
+			$this->Form->end();	
+		}
+		
+		?>
+		<?php		
+		$this->Widget->end();
+		?>	
+		
+<script type="text/javascript">
+	$(document).ready(function() {
+		$('a.manage[rel]').blestaModalConfirm({base_url: '<?php echo $this->Html->safe($this->base_uri);?>', close: '<?php $this->_("AppController.modal.text_close");?>', submit: true});
+	});
+</script>	
